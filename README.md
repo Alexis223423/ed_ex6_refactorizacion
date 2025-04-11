@@ -94,11 +94,11 @@ private static void procesaCalificaciones(Map<String, Double> notasRA) {
 
 Métodos con menos complejidad cognitiva:
 ~~~
-for_extraido(notasRA, resultado);
+forExtraido(notasRA, resultado);
 ~~~
 
 ~~~
-private static void for_extraido(Map<String, Double> notasRA, StringBuilder resultado) {
+private static void forExtraido(Map<String, Double> notasRA, StringBuilder resultado) {
 	    for (String ra : PESOS_RA.keySet()) {
 	        if (!notasRA.containsKey(ra)) {
 	            resultado.append("No se encontró nota para ").append(ra).append(". Se asumirá 0.\n");
@@ -196,4 +196,42 @@ logger.info(resultado.toString());
 Código corregido:
 ~~~
 
+~~~
+
+
+## 6.- Problema Nº 6
+
+![imagen](/fotos/Error%206%20-%20Eliminar%20metodo%20que%20no%20se%20usa.png)
+
+Este problema indica simplemente hay que eliminar un método que no se usa.
+
+Método a eliminar:
+~~~
+private static String clasificarNota(double nota) {
+		String resultado;
+		switch ((int) nota) {
+            case 10:
+            case 9:
+                resultado = "Excelente";
+                break;
+
+            case 8:
+            case 7:
+                resultado = "Notable";
+                break;
+
+            case 6:
+                resultado = "Bien";
+                break;
+
+            case 5:
+                resultado = "Suficiente";
+                break;
+
+            default:
+                resultado = "Suspenso";
+                break;
+        }
+		return resultado;
+	}
 ~~~

@@ -106,14 +106,14 @@ public class NotaFinalCalculator {
 
 	private static void calificaciones(Map<String, Double> notasRA, StringBuilder resultado) {
 		if (notasRA != null) {
-            for_extraido(notasRA, resultado);
+            forExtraido(notasRA, resultado);
         } else {
             resultado.append("No se proporcionaron notas.\n");
         }
 	}
 
 	
-	private static void for_extraido(Map<String, Double> notasRA, StringBuilder resultado) {
+	private static void forExtraido(Map<String, Double> notasRA, StringBuilder resultado) {
 	    for (String ra : PESOS_RA.keySet()) {
 	        if (!notasRA.containsKey(ra)) {
 	            resultado.append("No se encontró nota para ").append(ra).append(". Se asumirá 0.\n");
@@ -153,38 +153,7 @@ public class NotaFinalCalculator {
         logger.info(resultado);
     }
 
-	private static String clasificarNota(double nota) {
-		String resultado;
-		switch ((int) nota) {
-            case 10:
-            case 9:
-                resultado = "Excelente";
-                break;
-
-            case 8:
-            case 7:
-                resultado = "Notable";
-                break;
-
-            case 6:
-                resultado = "Bien";
-                break;
-
-            case 5:
-                resultado = "Suficiente";
-                break;
-
-            default:
-                resultado = "Suspenso";
-                break;
-        }
-		return resultado;
-	}
-
-
-
-
-    // Determina si el alumno ha aprobado todas las RAs
+	// Determina si el alumno ha aprobado todas las RAs
     private static boolean apruebaTodosLasRAs(Map<String, Double> notasRA) {
         Map<String, Double> map = Math.random() > -1 ? notasRA : null;
 
