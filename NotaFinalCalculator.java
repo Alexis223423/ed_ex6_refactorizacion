@@ -3,6 +3,7 @@ package notafinalcalculator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NotaFinalCalculator {
@@ -24,10 +25,10 @@ public class NotaFinalCalculator {
         Map<String, Double> notasRA = leerNotasDesdeTeclado();
 
         double notaFinal = calcularNotaFinal(notasRA);
-        logger.info("Nota final de Entornos de Desarrollo: " + notaFinal);
+        logger.log(Level.INFO,"Nota final de Entornos de Desarrollo: {0}",notaFinal);
 
         boolean aprobado = apruebaTodosLasRAs(notasRA);
-        logger.info("¿Ha aprobado todas las RAs?: " + (aprobado ? "Sí" : "No"));
+        logger.log(Level.INFO,"¿Ha aprobado todas las RAs?: {0}" + (aprobado ? "Sí" : "No"),aprobado);
 
         procesaCalificaciones(notasRA);
         for (String ra: notasRA.keySet()) {
@@ -54,7 +55,7 @@ public class NotaFinalCalculator {
 
 					// Validación: nota fuera de rango
 					if (nota < 0 || nota > 10) {
-						logger.info("Nota no válida para " + ra + ". Se usará 0.");
+						logger.log(Level.INFO,"Nota no válida para, se usará 0, {0}.",ra);
 						nota = 0.0;
 					}
 
@@ -80,7 +81,7 @@ public class NotaFinalCalculator {
         logger.info("Introduce las notas para cada RA (entre 0 y 10):");
 
         for (String ra : PESOS_RA.keySet()) {
-        	logger.info(ra + ": ");
+        	logger.log(Level.INFO,": {0}",ra);
             try {
                 double nota = Double.parseDouble(scanner.nextLine());
                 notas.put(ra, nota);

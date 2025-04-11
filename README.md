@@ -111,7 +111,42 @@ case 7:
                     break;
                 }
 ~~~
-Coódigo actual:
+Código actual:
+~~~
+case 7:
+                resultado = "Notable";
+                break;
 ~~~
 
+## 4.- Problema Nº 4
+
+![imagen](/fotos/Error%204%20-%20Constructores.png)
+
+Este mensaje indica que se está concatenando strings dentro de un logger.info(), utilizar esto es menos limpio y eficiente que usar el formato con logger.log().
+
+Código anterior:
+~~~
+logger.info("Nota no válida para " + ra + ". Se usará 0.");
+~~~
+
+~~~
+logger.info("¿Ha aprobado todas las RAs?: " + (aprobado ? "Sí" : "No"));
+~~~
+
+~~~
+logger.info(ra + ": ");
+~~~
+
+Código actual:
+
+~~~
+logger.log(Level.INFO,"Nota no válida para, se usará 0, {0}.",ra);
+~~~
+
+~~~
+logger.log(Level.INFO,"¿Ha aprobado todas las RAs?: {0}" + (aprobado ? "Sí" : "No"),aprobado);
+~~~
+
+~~~
+logger.log(Level.INFO,": {0}",ra);
 ~~~
