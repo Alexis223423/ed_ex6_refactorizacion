@@ -99,64 +99,63 @@ public class NotaFinalCalculator {
     private static void procesaCalificaciones(Map<String, Double> notasRA) {
         StringBuilder resultado = new StringBuilder();
 
-        if (notasRA != null) {
-            for (String ra : PESOS_RA.keySet()) {
-                if (notasRA.containsKey(ra)) {
-                    double nota = notasRA.get(ra);
-                    if (nota >= 0) {
-                        if (nota <= 10) {
-                            if (nota >= 9) {
-                                resultado.append(ra).append(": Excelente\n");
-                            } else if (nota >= 7) {
-                                if (nota >= 8) {
-                                    resultado.append(ra).append(": Notable Alto\n");
-                                } else {
-                                    resultado.append(ra).append(": Notable Bajo\n");
-                                }
-                            } else if (nota >= 5) {
-                                if (nota >= 6) {
-                                    resultado.append(ra).append(": Bien\n");
-                                } else {
-                                    resultado.append(ra).append(": Suficiente\n");
-                                }
-                            } else {
-                                if (nota >= 3) {
-                                    if (nota >= 4) {
-                                        resultado.append(ra).append(": Insuficiente Alto\n");
-                                    } else {
-                                        resultado.append(ra).append(": Insuficiente Medio\n");
-                                    }
-                                } else {
-                                    if (nota > 0) {
-                                        resultado.append(ra).append(": Insuficiente Bajo\n");
-                                    } else {
-                                        resultado.append(ra).append(": Muy Deficiente\n");
-                                    }
-                                }
-                            }
-                        } else {
-                            resultado.append("Nota para ").append(ra).append(" es mayor que 10. Error.\n");
-                            resultado.append("Nota para ").append(ra).append(" es mayor que 10. Error.\n");
-                        }
-                    } else {
-                        resultado.append("Nota para ").append(ra).append(" es negativa. Error.\n");
-                        resultado.append("Nota para ").append(ra).append(" es negativa. Error.\n");
-                    }
-                } else {
-                    resultado.append("No se encontró nota para ").append(ra).append(". Se asumirá 0.\n");
-                }
-            }
+        calificaciones(notasRA, resultado);
+
+        logger.log(Level.INFO,resultado.toString());
+    }
+
+	private static void calificaciones(Map<String, Double> notasRA, StringBuilder resultado) {
+		if (notasRA != null) {
+            for_extraido(notasRA, resultado);
         } else {
             resultado.append("No se proporcionaron notas.\n");
         }
+	}
 
-        logger.info(resultado.toString());
-    }
+	
+	private static void for_extraido(Map<String, Double> notasRA, StringBuilder resultado) {
+	    for (String ra : PESOS_RA.keySet()) {
+	        if (!notasRA.containsKey(ra)) {
+	            resultado.append("No se encontró nota para ").append(ra).append(". Se asumirá 0.\n");
+	            continue;
+	        }
+
+	        double nota = notasRA.get(ra);
+
+	        if (nota < 0) {
+	            resultado.append("Nota para ").append(ra).append(" es negativa. Error.\n");
+	        } else if (nota > 10) {
+	            resultado.append("Nota para ").append(ra).append(" es mayor que 10. Error.\n");
+	        } else {
+	            resultado.append(ra).append(": ").append(clasificarNota1(nota)).append("\n");
+	        }
+	    }
+	}
+
+	private static String clasificarNota1(double nota) {
+	    if (nota >= 9) return "Excelente";
+	    if (nota >= 8) return "Notable Alto";
+	    if (nota >= 7) return "Notable Bajo";
+	    if (nota >= 6) return "Bien";
+	    if (nota >= 5) return "Suficiente";
+	    if (nota >= 4) return "Insuficiente Alto";
+	    if (nota >= 3) return "Insuficiente Medio";
+	    if (nota > 0) return "Insuficiente Bajo";
+	    return "Muy Deficiente";
+	}
+
     
     private static void clasificarNotaPorSwitch(double nota) {
         String resultado = "";
 
-        switch ((int) nota) {
+        resultado = clasificarNota1(nota);
+
+        logger.info(resultado);
+    }
+
+	private static String clasificarNota(double nota) {
+		String resultado;
+		switch ((int) nota) {
             case 10:
             case 9:
                 resultado = "Excelente";
@@ -179,9 +178,8 @@ public class NotaFinalCalculator {
                 resultado = "Suspenso";
                 break;
         }
-
-        logger.info(resultado);
-    }
+		return resultado;
+	}
 
 
 

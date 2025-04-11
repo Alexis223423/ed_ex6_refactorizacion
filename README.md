@@ -92,9 +92,42 @@ private static void procesaCalificaciones(Map<String, Double> notasRA) {
     }
 ~~~
 
-Métodos más reducidos:
+Métodos con menos complejidad cognitiva:
+~~~
+for_extraido(notasRA, resultado);
 ~~~
 
+~~~
+private static void for_extraido(Map<String, Double> notasRA, StringBuilder resultado) {
+	    for (String ra : PESOS_RA.keySet()) {
+	        if (!notasRA.containsKey(ra)) {
+	            resultado.append("No se encontró nota para ").append(ra).append(". Se asumirá 0.\n");
+	            continue;
+	        }
+
+	        double nota = notasRA.get(ra);
+
+	        if (nota < 0) {
+	            resultado.append("Nota para ").append(ra).append(" es negativa. Error.\n");
+	        } else if (nota > 10) {
+	            resultado.append("Nota para ").append(ra).append(" es mayor que 10. Error.\n");
+	        } else {
+	            resultado.append(ra).append(": ").append(clasificarNota1(nota)).append("\n");
+	        }
+	    }
+	}
+
+	private static String clasificarNota1(double nota) {
+	    if (nota >= 9) return "Excelente";
+	    if (nota >= 8) return "Notable Alto";
+	    if (nota >= 7) return "Notable Bajo";
+	    if (nota >= 6) return "Bien";
+	    if (nota >= 5) return "Suficiente";
+	    if (nota >= 4) return "Insuficiente Alto";
+	    if (nota >= 3) return "Insuficiente Medio";
+	    if (nota > 0) return "Insuficiente Bajo";
+	    return "Muy Deficiente";
+	}
 ~~~
 
 ## 3.- Problema Nº 3
@@ -149,4 +182,18 @@ logger.log(Level.INFO,"¿Ha aprobado todas las RAs?: {0}" + (aprobado ? "Sí" : 
 
 ~~~
 logger.log(Level.INFO,": {0}",ra);
+~~~
+
+## 5.- Problema Nº 5
+
+![imagen](/fotos/Error%205%20-%20Metodo%20condicional.png)
+
+Código anterior:
+~~~
+logger.info(resultado.toString());
+~~~
+
+Código corregido:
+~~~
+
 ~~~
