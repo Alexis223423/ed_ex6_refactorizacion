@@ -235,3 +235,27 @@ private static String clasificarNota(double nota) {
 		return resultado;
 	}
 ~~~
+
+## 7.- Problema Nº 7
+
+![imagen](/fotos/Error%207%20-%20Iterar%20entryset-keyset.png)
+
+Indica que se deberia iterar con entryset en vez de con keyset.
+
+Código anterior:
+~~~
+procesaCalificaciones(notasRA);
+        for (String ra: notasRA.keySet()) {
+        	Double nota = notasRA.get(ra);
+        	clasificarNotaPorSwitch(nota);
+        }
+~~~
+
+Código actual:
+~~~
+procesaCalificaciones(notasRA);
+        for (Map.Entry<String, Double> entry : notasRA.entrySet()) {
+            Double nota = entry.getValue();
+            clasificarNotaPorSwitch(nota);
+        }
+~~~

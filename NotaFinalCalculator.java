@@ -28,13 +28,15 @@ public class NotaFinalCalculator {
         logger.log(Level.INFO,"Nota final de Entornos de Desarrollo: {0}",notaFinal);
 
         boolean aprobado = apruebaTodosLasRAs(notasRA);
-        logger.log(Level.INFO,"¿Ha aprobado todas las RAs?: {0}" + (aprobado ? "Sí" : "No"),aprobado);
+        logger.log(Level.INFO, "¿Ha aprobado todas las RAs?: {0}", (aprobado ? "Sí" : "No"));
 
+      
         procesaCalificaciones(notasRA);
-        for (String ra: notasRA.keySet()) {
-        	Double nota = notasRA.get(ra);
-        	clasificarNotaPorSwitch(nota);
+        for (Map.Entry<String, Double> entry : notasRA.entrySet()) {
+            Double nota = entry.getValue();
+            clasificarNotaPorSwitch(nota);
         }
+
         
     }
 
